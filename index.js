@@ -170,6 +170,7 @@ async function run() {
     const dryRun = core.getInput("dry-run");
     const secrets = getSecrets(core.getInput("secrets"));
     const atomic = getInput("atomic") || true;
+    const force = getInput("force") || false;
 
     core.debug(`param: track = "${track}"`);
     core.debug(`param: release = "${release}"`);
@@ -187,6 +188,7 @@ async function run() {
     core.debug(`param: timeout = "${timeout}"`);
     core.debug(`param: repository = "${repository}"`);
     core.debug(`param: atomic = "${atomic}"`);
+    core.debug(`param: force = "${force}"`);
 
 
     // Setup command options and arguments.
@@ -228,6 +230,11 @@ async function run() {
     if (atomic === true) {
       args.push("--atomic");
     }
+
+    if (force === true) {
+      args.push("--force");
+    }
+
 
     // Setup necessary files.
     if (process.env.KUBECONFIG_FILE) {
